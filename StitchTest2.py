@@ -2,15 +2,15 @@ import cv2
 
 def main():
     # 開啟兩個 WebCam
-    cap1 = cv2.VideoCapture(0)  # 第一個攝影機
-    cap2 = cv2.VideoCapture(1)  # 第二個攝影機
+    cap1 = cv2.VideoCapture(1)  # 第一個攝影機
+    cap2 = cv2.VideoCapture(0)  # 第二個攝影機
 
     if not cap1.isOpened() or not cap2.isOpened():
         print("無法開啟其中一個攝影機")
         return
 
     # 初始化 OpenCV Stitcher
-    stitcher = cv2.Stitcher_create()
+    stitcher = cv2.Stitcher_create(cv2.Stitcher_PANORAMA)
 
     while True:
         # 從兩個攝影機讀取畫面
@@ -21,11 +21,14 @@ def main():
             print("無法讀取畫面")
             break
 
+        cv2.imshow('WebCam1', frame1)
+        cv2.imshow('WebCam2', frame2)
+
         # 將兩個畫面合併
-        result = None
         status, result = stitcher.stitch([frame1, frame2])
 
         if status == cv2.Stitcher_OK:
+            print("合併成功")
             # 顯示合併後的畫面
             cv2.imshow('Stitched WebCam', result)
         else:

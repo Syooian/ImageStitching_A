@@ -29,7 +29,7 @@ def main():
     # if index == 0:
     #     print("沒有可用的 WebCam")
 
-        
+
 
 
 
@@ -44,6 +44,10 @@ def main():
     if not cap1.isOpened():
         print("無法開啟攝影機1")
         return
+    
+    # 初始化 OpenCV Stitcher
+    Stitcher = cv2.Stitcher_create(cv2.Stitcher_PANORAMA)
+    StitcherOnOff=False
 
     while True:
         # 讀取攝影機畫面
@@ -60,6 +64,20 @@ def main():
             break
         # 顯示畫面
         cv2.imshow('WebCam1', frame1)
+
+        # 開啟合併
+        # if(cv2.waitKey(1) & 0xFF==ord('s')):
+        #     StitcherOnOff =True
+
+        # if(StitcherOnOff):
+        #     result = None
+        #     status, result = Stitcher.stitch([frame0, frame1])
+
+        #     if status == cv2.Stitcher_OK:
+        #         # 顯示合併後的畫面
+        #         cv2.imshow('Stitched WebCam', result)
+        #     else:
+        #         print(f"合併失敗，狀態碼: {status}")
 
         # 按下 'q' 鍵退出
         if cv2.waitKey(1) & 0xFF == ord('q'):
