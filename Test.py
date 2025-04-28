@@ -66,18 +66,29 @@ def main():
         cv2.imshow('WebCam1', frame1)
 
         # 開啟合併
-        # if(cv2.waitKey(1) & 0xFF==ord('s')):
-        #     StitcherOnOff =True
+        #if(cv2.waitKey(1) & 0xFF==ord('s')):
+        #    StitcherOnOff =True
 
-        # if(StitcherOnOff):
-        #     result = None
-        #     status, result = Stitcher.stitch([frame0, frame1])
+        #if(StitcherOnOff):
+        if(cv2.waitKey(1) & 0xFF==ord('s')):
+            print("Start stitching")
 
-        #     if status == cv2.Stitcher_OK:
-        #         # 顯示合併後的畫面
-        #         cv2.imshow('Stitched WebCam', result)
-        #     else:
-        #         print(f"合併失敗，狀態碼: {status}")
+            F0 = frame0
+            F1 = frame1
+
+            # 將 frame0 和 frame1 轉成 JPG 並存檔
+            cv2.imwrite('frame0.jpg', frame0)
+            cv2.imwrite('frame1.jpg', frame1)
+
+            result = None
+            status, result = Stitcher.stitch([F0, F1])
+
+            if status == cv2.Stitcher_OK:
+                # 顯示合併後的畫面
+                cv2.imshow('Stitched WebCam', result)
+            else:
+                print(f"合併失敗，狀態碼: {status}")
+
 
         # 按下 'q' 鍵退出
         if cv2.waitKey(1) & 0xFF == ord('q'):
